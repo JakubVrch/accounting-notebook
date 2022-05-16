@@ -1,0 +1,11 @@
+{
+  "name": "accounting-notebook",
+  "version": "0.1.0",
+  "private": true,
+  "devDependencies": {
+    "husky": "^8.0.0"
+  },
+  "scripts": {
+    "prepare": "husky install"
+  }
+}
