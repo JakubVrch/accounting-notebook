@@ -7,12 +7,12 @@ export const mockTransactions: ITransaction[] = [
     entries: [
       {
         account: "Liabilities",
-        note: "Text 1;",
+        note: "Note 1",
         value: 1024,
       },
       {
         account: "Costs",
-        note: "Text 1;",
+        note: "Note 2",
         value: -1024,
       },
     ],

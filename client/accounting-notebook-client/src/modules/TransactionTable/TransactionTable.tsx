@@ -17,7 +17,8 @@ export function TransactionTableRow({
 }: {
   transaction: ITransaction;
 }): JSX.Element {
-  const [open, setOpen] = React.useState(true);
+  // TODO: Styling + i18n
+  const [open, setOpen] = React.useState(false);
   return (
     <>
       <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
@@ -38,7 +39,7 @@ export function TransactionTableRow({
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
-            <Table size="small" aria-label="purchases">
+            <Table size="small" aria-label="Entries">
               <TableHead>
                 <TableRow>
                   <TableCell>Account</TableCell>

@@ -5,10 +5,10 @@ describe("Home", () => {
   it("renders a heading", () => {
     render(<Home />);
 
-    const heading = screen.getByRole("heading", {
-      name: /Welcome to Next\.js!/i,
-    });
-
-    expect(heading).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", {
+        name: /Welcome to Next\.js!/i,
+      })
+    ).toBeInTheDocument();
   });
 });
