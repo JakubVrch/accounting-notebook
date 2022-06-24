@@ -18,7 +18,7 @@ export const db = factory({
 
 export function generateDB(data: typeof db) {
   faker.setLocale("cz");
-  faker.seed(123);
+  faker.seed(1111);
 
   const transactionCount = 100;
   const EntryCount = 2;
