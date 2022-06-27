@@ -4,7 +4,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 
 if (process.env.NEXT_PUBLIC_API_MOCKING === "enabled") {
-  require("../mocks");
+  import("../mocks").then(({ setupMSWWIthFaker }) => setupMSWWIthFaker());
 }
 
 const queryClient = new QueryClient();

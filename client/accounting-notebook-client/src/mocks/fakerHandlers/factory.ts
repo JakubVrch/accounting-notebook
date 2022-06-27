@@ -1,7 +1,7 @@
 import { factory, primaryKey, manyOf, nullable } from "@mswjs/data";
 import { faker } from "@faker-js/faker";
 
-export const db = factory({
+export const fakerDB = factory({
   transaction: {
     id: primaryKey(faker.datatype.uuid),
     date: () => faker.date.past(5),
@@ -16,7 +16,7 @@ export const db = factory({
   },
 });
 
-export function generateDB(data: typeof db) {
+export function generateFakerDB(data: typeof fakerDB) {
   faker.setLocale("cz");
   faker.seed(1111);
 
