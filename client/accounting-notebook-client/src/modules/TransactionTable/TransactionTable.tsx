@@ -10,12 +10,12 @@ import IconButton from "@mui/material/IconButton";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import Collapse from "@mui/material/Collapse";
-import { ITransaction } from "./types";
+import { ITransactionResponse } from "common/APISpec/transaction/types";
 
 export function TransactionTableRow({
   transaction,
 }: {
-  transaction: ITransaction;
+  transaction: ITransactionResponse;
 }): JSX.Element {
   // TODO: Styling + i18n
   const [open, setOpen] = React.useState(false);
@@ -71,7 +71,7 @@ export function TransactionTableRow({
 export const TransactionTable = ({
   transactions,
 }: {
-  transactions: ITransaction[];
+  transactions: ITransactionResponse[];
 }): JSX.Element => (
   <TableContainer component={Paper}>
     <Table aria-label="transaction table">
@@ -83,7 +83,7 @@ export const TransactionTable = ({
         </TableRow>
       </TableHead>
       <TableBody>
-        {transactions.map((row: ITransaction) => (
+        {transactions.map((row: ITransactionResponse) => (
           <TransactionTableRow
             key={row.date.toISOString() /*TODO: this is wrong*/}
             transaction={row}

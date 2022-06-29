@@ -1,6 +1,6 @@
-import { ITransaction } from "./types";
+import { ITransactionResponse } from "..";
 
-export const mockTransactions: ITransaction[] = [
+export const mockTransactions: ITransactionResponse[] = [
   {
     date: new Date("2019-01-16"),
     note: "Text 1",

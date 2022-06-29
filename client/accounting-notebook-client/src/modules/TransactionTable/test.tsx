@@ -1,8 +1,8 @@
-import { TransactionTable } from "./TransactionTable";
-import { mockTransactions } from "./mockTransactionData";
+import { TransactionTable } from ".";
 import React from "react";
 import "@testing-library/jest-dom";
 import { render, fireEvent, screen } from "@testing-library/react";
+import { mockTransactions } from "common/APISpec";
 
 describe(" Transaction Table", () => {
   it("renders data", () => {
