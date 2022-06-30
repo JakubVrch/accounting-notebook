@@ -5,6 +5,7 @@ import { useQuery } from "react-query";
 import { apiService } from "modules/APIClient";
 
 const NotesTable: NextPage = () => {
+  //Refactor to custom hooks, decide if to use on pages or in components
   const transactionQuery = useQuery("transactions", apiService.getTransactions);
 
   return (

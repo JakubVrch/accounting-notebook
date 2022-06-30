@@ -1,4 +1,11 @@
 import { setupServer } from "msw/node";
-import { testHandlers } from "..";
+import {
+  testResolveHandlers,
+  testErrorHandlers,
+  testBreakdownHandlers,
+} from "..";
 
-export const setupTestServer = () => setupServer(...testHandlers);
+export const setupTestResolveServer = () => setupServer(...testResolveHandlers);
+export const setupTestErrorServer = () => setupServer(...testErrorHandlers);
+export const setupTestBreakdownServer = () =>
+  setupServer(...testBreakdownHandlers);
