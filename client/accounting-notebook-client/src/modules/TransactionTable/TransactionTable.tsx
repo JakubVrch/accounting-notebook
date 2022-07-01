@@ -85,7 +85,7 @@ export const TransactionTable = ({
       <TableBody>
         {transactions.map((row: ITransactionResponse) => (
           <TransactionTableRow
-            key={row.date.toISOString() /*TODO: this is wrong*/}
+            key={row.date /*TODO: this is wrong*/}
             transaction={row}
           />
         ))}

@@ -2,7 +2,7 @@ import { ITransactionResponse } from "..";
 
 export const mockTransactions: ITransactionResponse[] = [
   {
-    date: new Date("2019-01-16"),
+    date: new Date("2019-01-16").toISOString(),
     note: "Text 1",
     entries: [
       {
@@ -18,7 +18,7 @@ export const mockTransactions: ITransactionResponse[] = [
     ],
   },
   {
-    date: new Date("2019-01-17"),
+    date: new Date("2019-01-17").toISOString(),
     note: "Text 2",
     entries: [
       {

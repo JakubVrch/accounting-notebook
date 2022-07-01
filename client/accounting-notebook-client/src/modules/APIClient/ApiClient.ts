@@ -1,18 +1,6 @@
-import axios, {
-  AxiosInstance,
-  AxiosRequestConfig,
-  AxiosResponse,
-  AxiosError,
-} from "axios";
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 import { ITransactionResponse } from "common/APISpec/transaction/types";
 import { baseURL, transactionRoute } from "common/APISpec/URL";
-
-function convertDateAttributes(data: ITransactionResponse[]) {
-  return data.map((element) => {
-    element.date = new Date(element.date);
-    return element;
-  });
-}
 
 const config: AxiosRequestConfig<null> = {
   baseURL: baseURL,
@@ -40,22 +28,10 @@ class ApiService {
   }
 
   public getTransactions = () =>
-    this.axios
-      .get<ITransactionResponse[], AxiosResponse<ITransactionResponse[], null>>(
-        transactionRoute
-      )
-      .then((response) => {
-        response.data = convertDateAttributes(response.data);
-        return response;
-      })
-      .catch((error: Error | AxiosError) => {
-        //TODO: Delete, kept this if potentially needed
-        if (axios.isAxiosError(error)) {
-          return Promise.reject(error);
-        } else {
-          return null;
-        }
-      });
+    this.axios.get<
+      ITransactionResponse[],
+      AxiosResponse<ITransactionResponse[], null>
+    >(transactionRoute);
 }
 
 export const apiService = ApiService.getInstance();

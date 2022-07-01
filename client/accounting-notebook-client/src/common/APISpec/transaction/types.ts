@@ -5,7 +5,7 @@ export interface IEntryResponse {
 }
 
 export interface ITransactionResponse {
-  date: Date;
+  date: string;
   note: string;
   entries: IEntryResponse[];
 }
