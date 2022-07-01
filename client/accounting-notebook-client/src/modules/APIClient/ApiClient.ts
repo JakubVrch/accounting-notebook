@@ -1,6 +1,5 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
-import { ITransactionResponse } from "common/APISpec/transaction/types";
-import { baseURL, transactionRoute } from "common/APISpec/URL";
+import { baseURL } from "common/APISpec/URL";
 
 const config: AxiosRequestConfig<null> = {
   baseURL: baseURL,
@@ -27,11 +26,12 @@ class ApiService {
     return ApiService.instance;
   }
 
-  public getTransactions = () =>
-    this.axios.get<
-      ITransactionResponse[],
-      AxiosResponse<ITransactionResponse[], null>
-    >(transactionRoute);
+  public createRequestFunction<responseDataType = unknown>(route: string) {
+    return () =>
+      this.axios.get<responseDataType, AxiosResponse<responseDataType, null>>(
+        route
+      );
+  }
 }
 
 export const apiService = ApiService.getInstance();

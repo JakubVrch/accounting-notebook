@@ -1,6 +1,10 @@
 //TOOD: solve dependencies of mock transaction data
 import "@testing-library/jest-dom";
-import { mockTransactions } from "common/APISpec";
+import {
+  ITransactionResponse,
+  mockTransactions,
+  transactionRoute,
+} from "common/APISpec";
 import { setupTestResolveServer } from "mocks";
 import { apiService } from ".";
 
@@ -12,9 +16,11 @@ afterAll(() => testServer.close());
 
 describe("Api client resolve", () => {
   it("fetches transaction data", (done) => {
-    apiService.getTransactions().then((response) => {
-      expect(response?.data).toEqual(mockTransactions);
-      done();
-    });
+    apiService
+      .createRequestFunction<ITransactionResponse[]>(transactionRoute)()
+      .then((response) => {
+        expect(response?.data).toEqual(mockTransactions);
+        done();
+      });
   });
 });

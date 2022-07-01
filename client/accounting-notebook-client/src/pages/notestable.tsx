@@ -1,12 +1,11 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import { TransactionTable } from "modules/TransactionTable";
-import { useQuery } from "react-query";
-import { apiService } from "modules/APIClient";
+import { TransactionTable } from "modules/Transactions";
+import UseTransactions from "modules/Transactions/transactionsQuery";
 
 const NotesTable: NextPage = () => {
   //Refactor to custom hooks, decide if to use on pages or in components
-  const transactionQuery = useQuery("transactions", apiService.getTransactions);
+  const transactionsQuery = UseTransactions();
 
   return (
     <div>
@@ -17,9 +16,9 @@ const NotesTable: NextPage = () => {
 
       <main>
         <h1>Notes Table</h1>
-        <button onClick={() => transactionQuery.refetch()}>Load test</button>
-        {transactionQuery.data ? (
-          <TransactionTable transactions={transactionQuery.data.data} />
+        <button onClick={() => transactionsQuery.refetch()}>Load test</button>
+        {transactionsQuery.data ? (
+          <TransactionTable transactions={transactionsQuery.data.data} />
         ) : null}
       </main>
     </div>
