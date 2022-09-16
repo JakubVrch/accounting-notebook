@@ -39,7 +39,12 @@ export function TransactionTableRow({
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
-            <Table size="small" aria-label="Entries">
+            <Table
+              size="small"
+              aria-label="Entries"
+              //TODO: Refactor sub table to another component
+              //TODO: Create input/edit form
+            >
               <TableHead>
                 <TableRow>
                   <TableCell>Account</TableCell>
