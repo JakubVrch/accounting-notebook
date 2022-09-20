@@ -14,13 +14,11 @@ describe("New", () => {
 
     expect(screen.getByRole("textbox", { name: "Date" })).toBeInTheDocument();
     expect(screen.getByRole("textbox", { name: "Note" })).toBeInTheDocument();
-    expect(
-      screen.getByRole("textbox", { name: "Account" })
-    ).toBeInTheDocument();
-    expect(screen.getByRole("textbox", { name: "Amount" })).toBeInTheDocument();
-    expect(
-      screen.getByRole("textbox", { name: "Line note" })
-    ).toBeInTheDocument();
+    expect(screen.getAllByRole("textbox", { name: "Account" })).toHaveLength(2);
+    expect(screen.getAllByRole("textbox", { name: "Amount" })).toHaveLength(2);
+    expect(screen.getAllByRole("textbox", { name: "Line note" })).toHaveLength(
+      2
+    );
     expect(screen.getByRole("button", { name: "Submit" })).toBeInTheDocument();
   });
 
@@ -45,15 +43,15 @@ describe("New", () => {
       "Test Text 123"
     );
     await userEvent.type(
-      screen.getByRole("textbox", { name: "Account" }),
+      screen.getAllByRole("textbox", { name: "Account" })[0],
       "Test Text 123"
     );
     await userEvent.type(
-      screen.getByRole("textbox", { name: "Amount" }),
+      screen.getAllByRole("textbox", { name: "Amount" })[0],
       "123,00"
     );
     await userEvent.type(
-      screen.getByRole("textbox", { name: "Line note" }),
+      screen.getAllByRole("textbox", { name: "Line note" })[0],
       "Test Text 123"
     );
 
@@ -63,13 +61,21 @@ describe("New", () => {
 
     await user.click(screen.getByRole("button", { name: "Submit" }));
 
-    //TODO: finich unit test: check if console logs form object
     expect(console.log).toHaveBeenCalledWith({
-      account: "Test Text 123",
-      amount: "123,00",
+      entries: [
+        {
+          value: "123,00",
+          account: "Test Text 123",
+          note: "Test Text 123",
+        },
+        {
+          value: "",
+          account: "",
+          note: "",
+        },
+      ],
       date: new Date("2022-05-12"),
       note: "Test Text 123",
-      "note-line": "Test Text 123",
     });
   });
 });

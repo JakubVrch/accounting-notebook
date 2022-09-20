@@ -1,24 +1,42 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import { Controller, useForm, Control } from "react-hook-form";
-import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
+import { useForm, useFieldArray } from "react-hook-form";
 import TextField from "@mui/material/TextField";
-import React, { useState } from "react";
 import Button from "@mui/material/Button";
+import { ControlledDatePicker } from "common/components/ControlledDatePicker";
 
-//TODO: Debug (set value of date as today - in case it is not changed)
-//TODO: Add array support
-//TODO:
+//TODO: Refactor to compnents
+//TODO: Validations a error display
+//TODO: PUT data
+
+export type FormValues = {
+  date: Date;
+  entries: {
+    account: string;
+    note: string;
+    value: string;
+  }[];
+  note: string;
+};
 
 const New: NextPage = () => {
   const {
     register,
     handleSubmit,
-    watch,
     control,
     formState: { errors },
-  } = useForm({ defaultValues: { date: new Date() } });
-  const onSubmit = (data) => console.log(data);
+  } = useForm<FormValues>({
+    defaultValues: {
+      date: new Date(),
+      entries: [{}, {}],
+    },
+  });
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "entries",
+    rules: { minLength: 2 },
+  });
+  const onSubmit = (data: FormValues) => console.log(data);
   return (
     <div>
       <Head>
@@ -27,7 +45,7 @@ const New: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <form onSubmit={handleSubmit(onSubmit)}>
-        {ControlledDatePicker(control)}
+        <ControlledDatePicker<FormValues> name="date" control={control} />
         <br />
         <TextField
           label="Note"
@@ -36,28 +54,45 @@ const New: NextPage = () => {
           variant="standard"
           {...register("note")}
         />
-        <hr />
-        <TextField
-          label="Account"
-          placeholder="Account"
-          variant="standard"
-          {...register("account")}
-        />
-        <TextField
-          label="Line note"
-          placeholder="Line note"
-          multiline
-          variant="standard"
-          {...register("note-line")}
-        />
-        <TextField
-          label="Amount"
-          placeholder="Amount"
-          variant="standard"
-          {...register("amount")}
-        />
+
+        {fields.map((field, index) => (
+          <div key={field.id}>
+            <hr />
+            <TextField
+              label="Account"
+              placeholder="Account"
+              variant="standard"
+              {...register(`entries.${index}.account`)}
+            />
+            <TextField
+              label="Line note"
+              placeholder="Line note"
+              multiline
+              variant="standard"
+              {...register(`entries.${index}.note`)}
+            />
+            <TextField
+              label="Amount"
+              placeholder="Amount"
+              variant="standard"
+              {...register(`entries.${index}.value`)}
+            />
+            <Button variant="outlined" onClick={() => remove(index)}>
+              Delete line
+            </Button>
+          </div>
+        ))}
+
         <Button type="submit" variant="outlined">
           Submit
+        </Button>
+        <Button
+          variant="outlined"
+          onClick={() => {
+            append({} as FormValues["entries"][0]);
+          }}
+        >
+          New line
         </Button>
       </form>
     </div>
@@ -65,23 +100,3 @@ const New: NextPage = () => {
 };
 
 export default New;
-
-function ControlledDatePicker(control: Control) {
-  return (
-    <Controller
-      name="date"
-      control={control}
-      render={({ field: { onChange, value } }) => (
-        <DesktopDatePicker
-          label="Date"
-          inputFormat="yyyy-MM-dd"
-          value={value}
-          onChange={(event) => {
-            onChange(event);
-          }}
-          renderInput={(params) => <TextField {...params} variant="standard" />}
-        />
-      )}
-    />
-  );
-}
