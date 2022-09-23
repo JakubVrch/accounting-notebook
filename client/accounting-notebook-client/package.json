@@ -10,11 +10,12 @@
     "test": "jest"
   },
   "dependencies": {
-    "@emotion/react": "^11.9.0",
-    "@emotion/styled": "^11.8.1",
+    "@emotion/react": "^11.10.4",
+    "@emotion/styled": "^11.10.4",
     "@mswjs/data": "^0.10.1",
     "@mui/icons-material": "^5.8.0",
-    "@mui/material": "^5.8.0",
+    "@mui/material": "^5.10.6",
+    "@mui/system": "^5.10.6",
     "@mui/x-date-pickers": "^5.0.0-beta.7",
     "axios": "^0.27.2",
     "date-fns": "^2.29.2",
