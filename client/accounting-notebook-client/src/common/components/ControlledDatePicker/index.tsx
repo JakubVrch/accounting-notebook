@@ -1,4 +1,4 @@
-import { TextField } from "@mui/material";
+import { TextField, TextFieldProps } from "@mui/material";
 import { DesktopDatePicker } from "@mui/x-date-pickers";
 import {
   FieldValues,
@@ -7,7 +7,7 @@ import {
 } from "react-hook-form";
 
 export function ControlledDatePicker<TFieldValues extends FieldValues>(
-  props: UseControllerProps<TFieldValues>
+  props: UseControllerProps<TFieldValues> & TextFieldProps
 ) {
   const {
     field: { onChange, value, ref },
@@ -19,7 +19,9 @@ export function ControlledDatePicker<TFieldValues extends FieldValues>(
       inputFormat="yyyy-MM-dd"
       value={value}
       onChange={onChange}
-      renderInput={(params) => <TextField {...params} variant="standard" />}
+      renderInput={(params) => (
+        <TextField {...params} {...props} variant="standard" />
+      )}
     />
   );
 }

@@ -38,13 +38,19 @@ export function TransactionForm({
   });
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <ControlledDatePicker<FormValues> name="date" control={control} />
+      <ControlledDatePicker<FormValues>
+        name="date"
+        required
+        control={control}
+        rules={{ required: true }}
+      />
       <br />
       <TextField
         label="Note"
         multiline
+        required
         variant="standard"
-        {...register("note")}
+        {...register("note", { required: true })}
       />
 
       {fields.map((field, index) => (
@@ -53,7 +59,8 @@ export function TransactionForm({
           <TextField
             label="Account"
             variant="standard"
-            {...register(`entries.${index}.account`)}
+            required
+            {...register(`entries.${index}.account`, { required: true })}
           />
           <TextField
             label="Line note"
@@ -64,7 +71,8 @@ export function TransactionForm({
           <TextField
             label="Amount"
             variant="standard"
-            {...register(`entries.${index}.value`)}
+            required
+            {...register(`entries.${index}.value`, { required: true })}
           />
           <Button variant="outlined" onClick={() => remove(index)}>
             Delete line

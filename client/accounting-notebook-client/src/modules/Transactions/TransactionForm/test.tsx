@@ -55,9 +55,13 @@ describe("TransactionForm", () => {
       screen.getAllByRole("textbox", { name: "Line note" })[0],
       "Test Text 123"
     );
-
-    expect(screen.getByRole("textbox", { name: "Date" })).toHaveValue(
-      "2022-05-12"
+    await userEvent.type(
+      screen.getAllByRole("textbox", { name: "Account" })[1],
+      "Test Text 456"
+    );
+    await userEvent.type(
+      screen.getAllByRole("textbox", { name: "Amount" })[1],
+      "89"
     );
 
     await user.click(screen.getByRole("button", { name: "Submit" }));
@@ -70,8 +74,8 @@ describe("TransactionForm", () => {
           note: "Test Text 123",
         },
         {
-          value: "",
-          account: "",
+          value: "89",
+          account: "Test Text 456",
           note: "",
         },
       ],
