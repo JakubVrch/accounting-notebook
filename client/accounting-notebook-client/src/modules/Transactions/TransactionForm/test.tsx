@@ -3,12 +3,13 @@ import userEvent from "@testing-library/user-event";
 import New from "pages/new";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { FormValues, TransactionForm } from "..";
 
-describe("New", () => {
-  it("renders header fields", () => {
+describe("TransactionForm", () => {
+  it("renders fields", () => {
     render(
       <LocalizationProvider dateAdapter={AdapterDateFns}>
-        <New />
+        <TransactionForm onSubmit={() => null} />
       </LocalizationProvider>
     );
 
@@ -24,11 +25,11 @@ describe("New", () => {
 
   it("can submit form", async () => {
     const user = userEvent.setup({ skipClick: true });
-    console.log = jest.fn();
+    const onSubmit = jest.fn();
 
     render(
       <LocalizationProvider dateAdapter={AdapterDateFns}>
-        <New />
+        <TransactionForm onSubmit={onSubmit} />
       </LocalizationProvider>
     );
 
@@ -48,7 +49,7 @@ describe("New", () => {
     );
     await userEvent.type(
       screen.getAllByRole("textbox", { name: "Amount" })[0],
-      "123,00"
+      "123,53"
     );
     await userEvent.type(
       screen.getAllByRole("textbox", { name: "Line note" })[0],
@@ -61,10 +62,10 @@ describe("New", () => {
 
     await user.click(screen.getByRole("button", { name: "Submit" }));
 
-    expect(console.log).toHaveBeenCalledWith({
+    expect(onSubmit.mock.calls[0][0]).toEqual({
       entries: [
         {
-          value: "123,00",
+          value: "123,53",
           account: "Test Text 123",
           note: "Test Text 123",
         },
