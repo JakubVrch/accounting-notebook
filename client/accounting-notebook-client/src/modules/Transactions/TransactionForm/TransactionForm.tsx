@@ -2,6 +2,7 @@ import { useForm, useFieldArray } from "react-hook-form";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { ControlledDatePicker } from "common/components/ControlledDatePicker";
+import { useEffect } from "react";
 
 export type FormValues = {
   date: Date;
@@ -15,6 +16,7 @@ export type FormValues = {
 
 //TODO: Refactor to compnents
 //TODO: Validations a error display
+//TODO: i18n
 export function TransactionForm({
   onSubmit,
 }: {
@@ -36,31 +38,43 @@ export function TransactionForm({
     name: "entries",
     rules: { minLength: 2 },
   });
+  useEffect(() => console.log(errors));
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
+      <hr />
       <ControlledDatePicker<FormValues>
+        label="Date *"
         name="date"
-        required
         control={control}
-        rules={{ required: true }}
+        error={!!errors.date}
+        helperText={errors.date ? errors.date.message : null}
+        rules={{ required: "Date is required" }}
       />
       <br />
       <TextField
-        label="Note"
+        label="Note *"
         multiline
-        required
         variant="standard"
-        {...register("note", { required: true })}
+        error={!!errors.note}
+        helperText={errors.note ? errors.note.message : null}
+        {...register("note", { required: "Note is required" })}
       />
 
       {fields.map((field, index) => (
         <div key={field.id}>
           <hr />
           <TextField
-            label="Account"
+            label="Account *"
             variant="standard"
-            required
-            {...register(`entries.${index}.account`, { required: true })}
+            error={!!errors.entries?.[index]?.account}
+            helperText={
+              errors.entries?.[index]?.account
+                ? errors.entries?.[index]?.account?.message
+                : null
+            }
+            {...register(`entries.${index}.account`, {
+              required: "Account is required",
+            })}
           />
           <TextField
             label="Line note"
@@ -69,10 +83,17 @@ export function TransactionForm({
             {...register(`entries.${index}.note`)}
           />
           <TextField
-            label="Amount"
+            label="Amount *"
             variant="standard"
-            required
-            {...register(`entries.${index}.value`, { required: true })}
+            error={!!errors.entries?.[index]?.value}
+            helperText={
+              errors.entries?.[index]?.value
+                ? errors.entries?.[index]?.value?.message
+                : null
+            }
+            {...register(`entries.${index}.value`, {
+              required: "Amount is required",
+            })}
           />
           <Button variant="outlined" onClick={() => remove(index)}>
             Delete line

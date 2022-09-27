@@ -15,7 +15,6 @@ export function ControlledDatePicker<TFieldValues extends FieldValues>(
   return (
     <DesktopDatePicker
       inputRef={ref}
-      label="Date"
       inputFormat="yyyy-MM-dd"
       value={value}
       onChange={onChange}

@@ -13,10 +13,14 @@ describe("TransactionForm", () => {
       </LocalizationProvider>
     );
 
-    expect(screen.getByRole("textbox", { name: "Date" })).toBeInTheDocument();
-    expect(screen.getByRole("textbox", { name: "Note" })).toBeInTheDocument();
-    expect(screen.getAllByRole("textbox", { name: "Account" })).toHaveLength(2);
-    expect(screen.getAllByRole("textbox", { name: "Amount" })).toHaveLength(2);
+    expect(screen.getByRole("textbox", { name: "Date *" })).toBeInTheDocument();
+    expect(screen.getByRole("textbox", { name: "Note *" })).toBeInTheDocument();
+    expect(screen.getAllByRole("textbox", { name: "Account *" })).toHaveLength(
+      2
+    );
+    expect(screen.getAllByRole("textbox", { name: "Amount *" })).toHaveLength(
+      2
+    );
     expect(screen.getAllByRole("textbox", { name: "Line note" })).toHaveLength(
       2
     );
@@ -33,22 +37,22 @@ describe("TransactionForm", () => {
       </LocalizationProvider>
     );
 
-    await userEvent.clear(screen.getByRole("textbox", { name: "Date" }));
+    await userEvent.clear(screen.getByRole("textbox", { name: "Date *" }));
 
     await userEvent.type(
-      screen.getByRole("textbox", { name: "Date" }),
+      screen.getByRole("textbox", { name: "Date *" }),
       "2022-05-12"
     );
     await userEvent.type(
-      screen.getByRole("textbox", { name: "Note" }),
+      screen.getByRole("textbox", { name: "Note *" }),
       "Test Text 123"
     );
     await userEvent.type(
-      screen.getAllByRole("textbox", { name: "Account" })[0],
+      screen.getAllByRole("textbox", { name: "Account *" })[0],
       "Test Text 123"
     );
     await userEvent.type(
-      screen.getAllByRole("textbox", { name: "Amount" })[0],
+      screen.getAllByRole("textbox", { name: "Amount *" })[0],
       "123,53"
     );
     await userEvent.type(
@@ -56,11 +60,11 @@ describe("TransactionForm", () => {
       "Test Text 123"
     );
     await userEvent.type(
-      screen.getAllByRole("textbox", { name: "Account" })[1],
+      screen.getAllByRole("textbox", { name: "Account *" })[1],
       "Test Text 456"
     );
     await userEvent.type(
-      screen.getAllByRole("textbox", { name: "Amount" })[1],
+      screen.getAllByRole("textbox", { name: "Amount *" })[1],
       "89"
     );
 
@@ -83,4 +87,6 @@ describe("TransactionForm", () => {
       note: "Test Text 123",
     });
   });
+  //TOOD: write test for required errors
+  it.todo("provides error for required fields");
 });
