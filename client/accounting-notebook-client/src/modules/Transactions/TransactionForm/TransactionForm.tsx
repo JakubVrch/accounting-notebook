@@ -14,9 +14,10 @@ export type FormValues = {
   note: string;
 };
 
-//TODO: Refactor to compnents
-//TODO: Validations a error display
+//TODO: Refactor to components
 //TODO: i18n
+//TODO: Value input should try to format number onBlur (1 000,25) and if validation fails it should revert to user input value
+//TODO: Aria error check
 export function TransactionForm({
   onSubmit,
 }: {
@@ -85,6 +86,7 @@ export function TransactionForm({
           <TextField
             label="Amount *"
             variant="standard"
+            inputMode="numeric"
             error={!!errors.entries?.[index]?.value}
             helperText={
               errors.entries?.[index]?.value
@@ -93,6 +95,10 @@ export function TransactionForm({
             }
             {...register(`entries.${index}.value`, {
               required: "Amount is required",
+              pattern: {
+                value: /^[+-]?[0-9]+(,[0-9]{1,2})?$/,
+                message: 'Amount must be in format "1111,11"',
+              },
             })}
           />
           <Button variant="outlined" onClick={() => remove(index)}>
